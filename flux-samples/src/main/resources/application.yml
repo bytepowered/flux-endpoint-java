@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: "flux-sample"
+
+# Apache Dubbo配置
+dubbo:
+  application:
+    name: "${spring.application.name}"
+  registry:
+    address: zookeeper://localhost:2181
+  scan:
+    base-packages: "net.bytepowered.flux.samples"
+  protocol:
+    port: 20990
+
+# ZK 作为Flux网关Http与后端Dubbo请求映射的元数据中心
+flux:
+  base-package: "net.bytepowered.flux.samples.service"
+  prefix: "/sample"
+  metadata-registry:
+    address: ${FLUX_REGISTRY_ADDRESSS:zookeeper://localhost:2181}
+
+
+# 日志配置
+logging:
+  level:
+    root: info
+    "net.bytepowered.flux": debug
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+    file: "%d %p %c{1.} [%t] %m%n"
+
