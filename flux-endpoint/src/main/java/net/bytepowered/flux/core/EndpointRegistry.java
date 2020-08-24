@@ -8,8 +8,6 @@ import java.util.List;
  */
 public interface EndpointRegistry {
 
-    String ROOT_NODE_PATH = "/flux-metadata";
-
     /**
      * Startup
      */

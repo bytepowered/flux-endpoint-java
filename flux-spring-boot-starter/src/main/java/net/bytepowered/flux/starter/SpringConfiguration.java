@@ -1,7 +1,7 @@
 package net.bytepowered.flux.starter;
 
-import net.bytepowered.flux.core.MetadataDecoder;
 import net.bytepowered.flux.core.EndpointRegistry;
+import net.bytepowered.flux.core.MetadataDecoder;
 import net.bytepowered.flux.core.MetadataResolver;
 import net.bytepowered.flux.impl.JsonDecoder;
 import net.bytepowered.flux.impl.registry.ZookeeperEndpointRegistry;
@@ -40,13 +40,14 @@ public class SpringConfiguration {
     ZookeeperRegistryConfig zookeeperConfig() {
         SpringRegistryConfig c = registryConfig();
         return new ZookeeperRegistryConfig(
+                c.getRootPath(),
                 c.getSessionTimeoutMs(),
                 c.getConnectionTimeoutMs(),
                 c.getAddress());
     }
 
     @Bean
-    SpringRegistryConfig registryConfig(){
+    SpringRegistryConfig registryConfig() {
         return new SpringRegistryConfig();
     }
 

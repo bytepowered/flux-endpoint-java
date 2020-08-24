@@ -18,6 +18,9 @@ flux:
   base-package: "net.bytepowered.flux.samples.service"
   prefix: "/sample"
   metadata-registry:
+    root-path: "/flux-metadata"
+    session-timeout-ms: 30000
+    connection-timeout-ms: 60000
     address: ${FLUX_REGISTRY_ADDRESSS:zookeeper://localhost:2181}
 
 

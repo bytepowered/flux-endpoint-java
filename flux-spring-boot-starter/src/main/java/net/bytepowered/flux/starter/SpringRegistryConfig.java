@@ -11,9 +11,18 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("flux.metadata-registry")
 public class SpringRegistryConfig {
 
+    private String rootPath = "/flux-metadata";
     private int sessionTimeoutMs = 30_000;
     private int connectionTimeoutMs = 60_000;
     private String address = "zookeeper://zookeeper:2181";
+
+    public String getRootPath() {
+        return rootPath;
+    }
+
+    public void setRootPath(String rootPath) {
+        this.rootPath = rootPath;
+    }
 
     public int getSessionTimeoutMs() {
         return sessionTimeoutMs;

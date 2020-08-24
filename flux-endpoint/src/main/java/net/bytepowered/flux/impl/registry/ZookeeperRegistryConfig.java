@@ -5,6 +5,7 @@ package net.bytepowered.flux.impl.registry;
  */
 public class ZookeeperRegistryConfig {
 
+    private final String rootPath;
     /**
      * Session超时：毫秒
      */
@@ -20,10 +21,15 @@ public class ZookeeperRegistryConfig {
      */
     private final String address;
 
-    public ZookeeperRegistryConfig(int sessionTimeoutMs, int connectionTimeoutMs, String address) {
+    public ZookeeperRegistryConfig(String rootPath, int sessionTimeoutMs, int connectionTimeoutMs, String address) {
+        this.rootPath = rootPath;
         this.sessionTimeoutMs = sessionTimeoutMs;
         this.connectionTimeoutMs = connectionTimeoutMs;
         this.address = address;
+    }
+
+    public String getRootPath() {
+        return rootPath;
     }
 
     public int getSessionTimeoutMs() {

@@ -1,8 +1,8 @@
 package net.bytepowered.flux.impl.registry;
 
-import net.bytepowered.flux.core.MetadataDecoder;
-import net.bytepowered.flux.core.EndpointRegistry;
 import net.bytepowered.flux.core.EndpointMetadata;
+import net.bytepowered.flux.core.EndpointRegistry;
+import net.bytepowered.flux.core.MetadataDecoder;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
@@ -25,11 +25,13 @@ public class ZookeeperEndpointRegistry implements EndpointRegistry {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ZookeeperEndpointRegistry.class);
 
+    private final String rootPath;
     private final MetadataDecoder decoder;
     private final CuratorFramework zkClient;
 
     public ZookeeperEndpointRegistry(ZookeeperRegistryConfig config, MetadataDecoder decoder) {
         this.decoder = decoder;
+        this.rootPath = config.getRootPath();
         this.zkClient = CuratorFrameworkFactory.builder()
                 .connectString(resolveAddress(config.getAddress()))
                 .sessionTimeoutMs(config.getSessionTimeoutMs())
@@ -40,7 +42,7 @@ public class ZookeeperEndpointRegistry implements EndpointRegistry {
 
     @Override
     public void startup() {
-        LOGGER.info("Startup... Zookeeper.namespace={}", ROOT_NODE_PATH);
+        LOGGER.info("Startup... Zookeeper.namespace={}", rootPath);
         zkClient.start();
         LOGGER.info("Startup...OK");
     }
@@ -93,7 +95,7 @@ public class ZookeeperEndpointRegistry implements EndpointRegistry {
     private String resolveZkPath(EndpointMetadata metadata) {
         // /flux/get#sample.test.$.profile
         final String path = resolveDynamic(metadata.getHttpPattern().replace('/', '.'));
-        return ROOT_NODE_PATH + "/" + metadata.getHttpMethod().toLowerCase() + "#" + path;
+        return rootPath + "/" + metadata.getHttpMethod().toLowerCase() + "#" + path;
     }
 
     private final static Pattern DYNAMIC_PATH = Pattern.compile("(\\{.+\\})");
