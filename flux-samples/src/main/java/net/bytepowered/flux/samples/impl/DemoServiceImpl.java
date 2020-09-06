@@ -10,7 +10,6 @@ import org.apache.dubbo.config.annotation.Service;
 import org.apache.dubbo.rpc.RpcContext;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Instant;
@@ -22,7 +21,7 @@ import java.util.Map;
  * @author 陈哈哈 (yongjia.chen@hotmail.com)
  */
 @Slf4j
-@Service(group = "2019", version = "v1.0", filter = {"fxmessage", "validation"}, validation = "true")
+@Service(group = "2019", version = "v1.0")
 public class DemoServiceImpl implements DemoService {
 
     @Override

@@ -11,7 +11,7 @@
     </parent>
     <groupId>net.bytepowered</groupId>
     <artifactId>flux-endpoint-parent</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>flux-endpoint-parent</name>
     <url>https://github.com/bytepowered/flux-endpoint</url>
     <description>Endpoint client for FluxGo</description>

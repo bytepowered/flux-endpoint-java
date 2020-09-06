@@ -4,7 +4,7 @@
 
 见Maven中央仓库: [https://search.maven.org/artifact/net.bytepowered/flux-spring-boot-starter](https://search.maven.org/artifact/net.bytepowered/flux-spring-boot-starter)
 
-Latest version: `0.0.2`
+Latest version: `1.0.0`
 
 ### Apache maven
 
