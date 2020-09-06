@@ -1,9 +1,9 @@
 package net.bytepowered.flux.starter;
 
 import net.bytepowered.flux.annotation.FxMapping;
-import net.bytepowered.flux.core.EndpointRegistry;
-import net.bytepowered.flux.core.MetadataResolver;
-import net.bytepowered.flux.core.ServiceBeanMetadata;
+import net.bytepowered.flux.endpoint.Registry;
+import net.bytepowered.flux.endpoint.MetadataResolver;
+import net.bytepowered.flux.endpoint.entity.ServiceBeanVO;
 import org.apache.dubbo.config.spring.ServiceBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,15 +24,15 @@ import java.util.stream.Collectors;
  * @author 陈哈哈 (yongjia.chen@hotmail.com)
  * @since 1.0.0
  */
-public class SpringBootstrap implements ApplicationListener<ApplicationReadyEvent> {
+public class SpringScannerBootstrap implements ApplicationListener<ApplicationReadyEvent> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SpringBootstrap.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SpringScannerBootstrap.class);
 
     private final SpringClientConfig config;
-    private final EndpointRegistry registry;
+    private final Registry registry;
     private final MetadataResolver resolver;
 
-    public SpringBootstrap(SpringClientConfig config, EndpointRegistry registry, MetadataResolver resolver) {
+    public SpringScannerBootstrap(SpringClientConfig config, Registry registry, MetadataResolver resolver) {
         this.config = config;
         this.registry = registry;
         this.resolver = resolver;
@@ -40,23 +40,23 @@ public class SpringBootstrap implements ApplicationListener<ApplicationReadyEven
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
-        LOGGER.info("Flux client discovery start scanning...");
+        LOGGER.info("Flux client scanner start scanning...");
         final Instant start = Instant.now();
-        final List<ServiceBeanMetadata> metadata = searchMappingBeans(event.getApplicationContext());
+        final List<ServiceBeanVO> metadata = searchMappingBeans(event.getApplicationContext());
         try {
             registry.startup();
-            registry.submit(metadata.stream()
+            registry.publish(metadata.stream()
                     .flatMap(m -> resolver.resolve(m).stream())
                     .collect(Collectors.toList()));
         } catch (Exception e) {
-            LOGGER.error("Flux client discovery error: ", e);
+            LOGGER.error("Flux client scanner error: ", e);
         } finally {
             registry.shutdown();
         }
-        LOGGER.info("Flux client discovery scan COMPLETED: {}ms", Duration.between(start, Instant.now()));
+        LOGGER.info("Flux client scanner COMPLETED: {}ms", Duration.between(start, Instant.now()));
     }
 
-    private List<ServiceBeanMetadata> searchMappingBeans(ApplicationContext context) {
+    private List<ServiceBeanVO> searchMappingBeans(ApplicationContext context) {
         final List<String> packages = scanPackages();
         if (packages.isEmpty()) {
             return searchPackageBeans(null, context);
@@ -71,12 +71,12 @@ public class SpringBootstrap implements ApplicationListener<ApplicationReadyEven
         }
     }
 
-    private List<ServiceBeanMetadata> searchPackageBeans(String packageName, ApplicationContext context) {
+    private List<ServiceBeanVO> searchPackageBeans(String packageName, ApplicationContext context) {
         final boolean filterPackage = !StringUtils.isEmpty(packageName);
         if (filterPackage) {
             LOGGER.info("Flux filter package: {}", packageName);
         }
-        final String prefix = config.getPrefix();
+        final String pathPrefix = config.getPathPrefix();
         final String applicationName = context.getApplicationName();
         final Collection<ServiceBean> beans = context.getBeansOfType(ServiceBean.class).values();
         LOGGER.debug("Load dubbo service beans: {}", beans.size());
@@ -89,9 +89,9 @@ public class SpringBootstrap implements ApplicationListener<ApplicationReadyEven
                     }
                 })
                 .peek(bean -> LOGGER.info("Found dubbo.bean: {}", bean))
-                .map(bean -> ServiceBeanMetadata.builder()
+                .map(bean -> ServiceBeanVO.builder()
                         .application(applicationName)
-                        .prefix(prefix)
+                        .pathPrefix(pathPrefix)
                         .group(bean.getGroup())
                         .version(bean.getVersion())
                         .interfaceName(bean.getInterface())

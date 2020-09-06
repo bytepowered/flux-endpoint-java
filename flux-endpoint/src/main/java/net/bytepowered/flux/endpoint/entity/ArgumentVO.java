@@ -1,4 +1,4 @@
-package net.bytepowered.flux.core;
+package net.bytepowered.flux.endpoint.entity;
 
 import net.bytepowered.flux.annotation.FxScope;
 
@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author 陈哈哈 (yongjia.chen@hotmail.com)
  */
-public class ArgumentMetadata implements Serializable {
+public class ArgumentVO implements Serializable {
 
     private transient AnnotatedElement element;
 
@@ -46,7 +46,7 @@ public class ArgumentMetadata implements Serializable {
     /**
      * 当type类型为POJO时，fields记录所有POJO成员字段的列表及其类型
      */
-    private List<ArgumentMetadata> fields;
+    private List<ArgumentVO> fields;
 
     //
 
@@ -78,11 +78,11 @@ public class ArgumentMetadata implements Serializable {
         return httpScope;
     }
 
-    public List<ArgumentMetadata> getFields() {
+    public List<ArgumentVO> getFields() {
         return fields;
     }
 
-    public ArgumentMetadata(AnnotatedElement element, String typeClass, List<String> typeGeneric, String argName, ArgumentType argType, String httpName, FxScope httpScope, List<ArgumentMetadata> fields) {
+    public ArgumentVO(AnnotatedElement element, String typeClass, List<String> typeGeneric, String argName, ArgumentType argType, String httpName, FxScope httpScope, List<ArgumentVO> fields) {
         this.element = element;
         this.typeClass = typeClass;
         this.typeGeneric = typeGeneric;
@@ -105,7 +105,7 @@ public class ArgumentMetadata implements Serializable {
         private ArgumentType argType;
         private String httpName;
         private FxScope httpScope;
-        private List<ArgumentMetadata> fields;
+        private List<ArgumentVO> fields;
 
         private Builder() {
         }
@@ -145,13 +145,13 @@ public class ArgumentMetadata implements Serializable {
             return this;
         }
 
-        public Builder fields(List<ArgumentMetadata> fields) {
+        public Builder fields(List<ArgumentVO> fields) {
             this.fields = fields;
             return this;
         }
 
-        public ArgumentMetadata build() {
-            return new ArgumentMetadata(element, typeClass, typeGeneric, argName, argType, httpName, httpScope, fields);
+        public ArgumentVO build() {
+            return new ArgumentVO(element, typeClass, typeGeneric, argName, argType, httpName, httpScope, fields);
         }
     }
 

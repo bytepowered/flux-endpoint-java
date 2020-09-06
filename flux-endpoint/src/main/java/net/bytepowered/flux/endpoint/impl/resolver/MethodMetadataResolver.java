@@ -1,7 +1,11 @@
-package net.bytepowered.flux.impl.resolver;
+package net.bytepowered.flux.endpoint.impl.resolver;
 
 import net.bytepowered.flux.annotation.FxMapping;
-import net.bytepowered.flux.core.*;
+import net.bytepowered.flux.endpoint.*;
+import net.bytepowered.flux.endpoint.entity.ArgumentVO;
+import net.bytepowered.flux.endpoint.entity.EndpointVO;
+import net.bytepowered.flux.endpoint.entity.ProtoType;
+import net.bytepowered.flux.endpoint.entity.ServiceBeanVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,12 +33,12 @@ public class MethodMetadataResolver implements MetadataResolver {
     }
 
     @Override
-    public List<EndpointMetadata> resolve(ServiceBeanMetadata metadata) {
+    public List<EndpointVO> resolve(ServiceBeanVO metadata) {
         LOGGER.info("Dubbo.Bean: group={}, version={}, iface={}, methods={}",
                 metadata.getGroup(), metadata.getVersion(), metadata.getInterfaceName(), metadata.getMethods().size());
         return metadata.getMethods().stream()
                 .map(method -> resolveToMetadata(
-                        metadata.getPrefix(),
+                        metadata.getPathPrefix(),
                         metadata.getApplication(),
                         metadata.getGroup(),
                         metadata.getVersion(),
@@ -44,10 +48,10 @@ public class MethodMetadataResolver implements MetadataResolver {
                 .collect(Collectors.toList());
     }
 
-    public EndpointMetadata resolveToMetadata(String prefix, String appName,
-                                              String serviceGroup, String serviceVer, String interfaceName,
-                                              FxMapping mapping, Method method) {
-        final EndpointMetadata.Builder builder = EndpointMetadata.builder()
+    public EndpointVO resolveToMetadata(String prefix, String appName,
+                                        String serviceGroup, String serviceVer, String interfaceName,
+                                        FxMapping mapping, Method method) {
+        final EndpointVO.Builder builder = EndpointVO.builder()
                 .application(appName == null ? "" : appName)
                 .rpcGroup(serviceGroup == null ? "" : serviceGroup)
                 .rpcVersion(serviceVer == null ? "" : serviceVer);
@@ -60,7 +64,7 @@ public class MethodMetadataResolver implements MetadataResolver {
         if (!version.isEmpty()) {
             builder.rpcVersion(version);
         }
-        builder.protocol(EndpointProtocol.DUBBO);
+        builder.protocol(ProtoType.DUBBO);
         builder.authorize(mapping.authorized());
         // 网关侧请求定义
         builder.httpPattern(Paths.get(prefix, path).toString());
@@ -70,12 +74,12 @@ public class MethodMetadataResolver implements MetadataResolver {
         builder.upstreamMethod(method.getName());
         // 解析方法参数类型
         final int count = method.getParameterCount();
-        final List<ArgumentMetadata> arguments = new ArrayList<>(count);
+        final List<ArgumentVO> arguments = new ArrayList<>(count);
         if (count > 0) {
             final java.lang.reflect.Parameter[] mps = method.getParameters();
             final Type[] gts = method.getGenericParameterTypes();
             for (int i = 0; i < count; i++) {
-                ArgumentMetadata field = null;
+                ArgumentVO field = null;
                 for (ParameterResolver resolver : parameterResolvers) {
                     field = resolver.resolve(mps[i], gts[i]);
                     if (field != null) {

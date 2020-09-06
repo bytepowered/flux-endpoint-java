@@ -1,7 +1,7 @@
-package net.bytepowered.flux.impl.resolver;
+package net.bytepowered.flux.endpoint.impl.resolver;
 
-import net.bytepowered.flux.core.ArgumentMetadata;
-import net.bytepowered.flux.core.ParameterResolver;
+import net.bytepowered.flux.endpoint.entity.ArgumentVO;
+import net.bytepowered.flux.endpoint.ParameterResolver;
 
 import java.lang.reflect.Type;
 
@@ -17,7 +17,7 @@ public class JavaFieldParameterResolver implements ParameterResolver {
     }
 
     @Override
-    public ArgumentMetadata resolve(java.lang.reflect.Parameter parameter, Type genericType) {
+    public ArgumentVO resolve(java.lang.reflect.Parameter parameter, Type genericType) {
         if (!typeHelper.isSupportedType(parameter.getType())) {
             return null;
         }

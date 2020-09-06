@@ -1,8 +1,8 @@
-package net.bytepowered.flux.impl.registry;
+package net.bytepowered.flux.endpoint.impl.registry;
 
-import net.bytepowered.flux.core.EndpointMetadata;
-import net.bytepowered.flux.core.EndpointRegistry;
-import net.bytepowered.flux.core.MetadataDecoder;
+import net.bytepowered.flux.endpoint.MetadataDecoder;
+import net.bytepowered.flux.endpoint.Registry;
+import net.bytepowered.flux.endpoint.entity.EndpointVO;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
@@ -21,15 +21,15 @@ import java.util.stream.Collectors;
  * @author 陈哈哈 (yongjia.chen@hotmail.com)
  * @since 1.0.0
  */
-public class ZookeeperEndpointRegistry implements EndpointRegistry {
+public class ZookeeperRegistry implements Registry {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ZookeeperEndpointRegistry.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ZookeeperRegistry.class);
 
     private final String rootPath;
     private final MetadataDecoder decoder;
     private final CuratorFramework zkClient;
 
-    public ZookeeperEndpointRegistry(ZookeeperRegistryConfig config, MetadataDecoder decoder) {
+    public ZookeeperRegistry(ZookeeperConfig config, MetadataDecoder decoder) {
         this.decoder = decoder;
         this.rootPath = config.getRootPath();
         this.zkClient = CuratorFrameworkFactory.builder()
@@ -59,11 +59,11 @@ public class ZookeeperEndpointRegistry implements EndpointRegistry {
     }
 
     @Override
-    public void submit(List<EndpointMetadata> metadataList) throws Exception {
+    public void publish(List<EndpointVO> metadataList) throws Exception {
         if (metadataList == null || metadataList.isEmpty()) {
             throw new IllegalArgumentException("Method metadata not found");
         }
-        for (EndpointMetadata metadata : metadataList) {
+        for (EndpointVO metadata : metadataList) {
             final String zkPath = resolveZkPath(metadata);
             final byte[] data = decoder.decode(metadata).getBytes(StandardCharsets.UTF_8);
             if (zkClient.checkExists().forPath(zkPath) == null) {
@@ -92,7 +92,7 @@ public class ZookeeperEndpointRegistry implements EndpointRegistry {
                 .collect(Collectors.joining(","));
     }
 
-    private String resolveZkPath(EndpointMetadata metadata) {
+    private String resolveZkPath(EndpointVO metadata) {
         // /flux/get#sample.test.$.profile
         final String path = resolveDynamic(metadata.getHttpPattern().replace('/', '.'));
         return rootPath + "/" + metadata.getHttpMethod().toLowerCase() + "#" + path;

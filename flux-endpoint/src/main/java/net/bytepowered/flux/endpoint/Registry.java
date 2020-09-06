@@ -1,4 +1,6 @@
-package net.bytepowered.flux.core;
+package net.bytepowered.flux.endpoint;
+
+import net.bytepowered.flux.endpoint.entity.EndpointVO;
 
 import java.util.List;
 
@@ -6,7 +8,7 @@ import java.util.List;
  * @author 陈哈哈 (yongjia.chen@hotmail.com)
  * @since 1.0.0
  */
-public interface EndpointRegistry {
+public interface Registry {
 
     /**
      * Startup
@@ -19,11 +21,11 @@ public interface EndpointRegistry {
     void shutdown();
 
     /**
-     * Submit metadata
+     * Publish metadata
      *
      * @param metadataList Metadata
      * @throws Exception Error if
      */
-    void submit(List<EndpointMetadata> metadataList) throws Exception;
+    void publish(List<EndpointVO> metadataList) throws Exception;
 
 }

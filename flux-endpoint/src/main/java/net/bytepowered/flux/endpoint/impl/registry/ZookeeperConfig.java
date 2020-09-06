@@ -1,9 +1,9 @@
-package net.bytepowered.flux.impl.registry;
+package net.bytepowered.flux.endpoint.impl.registry;
 
 /**
  * @author 陈哈哈 (yongjia.chen@hotmail.com)
  */
-public class ZookeeperRegistryConfig {
+public class ZookeeperConfig {
 
     private final String rootPath;
     /**
@@ -21,7 +21,7 @@ public class ZookeeperRegistryConfig {
      */
     private final String address;
 
-    public ZookeeperRegistryConfig(String rootPath, int sessionTimeoutMs, int connectionTimeoutMs, String address) {
+    public ZookeeperConfig(String rootPath, int sessionTimeoutMs, int connectionTimeoutMs, String address) {
         this.rootPath = rootPath;
         this.sessionTimeoutMs = sessionTimeoutMs;
         this.connectionTimeoutMs = connectionTimeoutMs;

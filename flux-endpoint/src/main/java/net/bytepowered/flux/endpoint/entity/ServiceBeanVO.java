@@ -1,4 +1,4 @@
-package net.bytepowered.flux.core;
+package net.bytepowered.flux.endpoint.entity;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -6,10 +6,10 @@ import java.util.List;
 /**
  * @author 陈哈哈 (yongjia.chen@hotmail.com)
  */
-public class ServiceBeanMetadata {
+public class ServiceBeanVO {
 
     private String application;
-    private String prefix;
+    private String pathPrefix;
     private String version;
     private String group;
     private String interfaceName;
@@ -20,8 +20,8 @@ public class ServiceBeanMetadata {
         return application;
     }
 
-    public String getPrefix() {
-        return prefix;
+    public String getPathPrefix() {
+        return pathPrefix;
     }
 
     public String getVersion() {
@@ -50,7 +50,7 @@ public class ServiceBeanMetadata {
 
     public static final class Builder {
         private String application;
-        private String prefix;
+        private String pathPrefix;
         private String version;
         private String group;
         private String interfaceName;
@@ -65,8 +65,8 @@ public class ServiceBeanMetadata {
             return this;
         }
 
-        public Builder prefix(String prefix) {
-            this.prefix = prefix;
+        public Builder pathPrefix(String prefix) {
+            this.pathPrefix = prefix;
             return this;
         }
 
@@ -95,16 +95,16 @@ public class ServiceBeanMetadata {
             return this;
         }
 
-        public ServiceBeanMetadata build() {
-            ServiceBeanMetadata serviceBeanMetadata = new ServiceBeanMetadata();
-            serviceBeanMetadata.group = this.group;
-            serviceBeanMetadata.prefix = this.prefix;
-            serviceBeanMetadata.interfaceClass = this.interfaceClass;
-            serviceBeanMetadata.methods = this.methods;
-            serviceBeanMetadata.interfaceName = this.interfaceName;
-            serviceBeanMetadata.application = this.application;
-            serviceBeanMetadata.version = this.version;
-            return serviceBeanMetadata;
+        public ServiceBeanVO build() {
+            ServiceBeanVO serviceBeanVO = new ServiceBeanVO();
+            serviceBeanVO.group = this.group;
+            serviceBeanVO.pathPrefix = this.pathPrefix;
+            serviceBeanVO.interfaceClass = this.interfaceClass;
+            serviceBeanVO.methods = this.methods;
+            serviceBeanVO.interfaceName = this.interfaceName;
+            serviceBeanVO.application = this.application;
+            serviceBeanVO.version = this.version;
+            return serviceBeanVO;
         }
     }
 }

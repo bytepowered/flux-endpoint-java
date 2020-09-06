@@ -1,4 +1,4 @@
-package net.bytepowered.flux.core;
+package net.bytepowered.flux.endpoint.entity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @author 陈哈哈 (yongjia.chen@hotmail.com)
  */
-public class EndpointMetadata implements Serializable {
+public class EndpointVO implements Serializable {
 
     /**
      * Endpoint版本
@@ -23,7 +23,7 @@ public class EndpointMetadata implements Serializable {
     /**
      * 映射的协议名称
      */
-    private EndpointProtocol protocol;
+    private ProtoType protocol;
 
     /**
      * Dubbo.group
@@ -78,14 +78,14 @@ public class EndpointMetadata implements Serializable {
     /**
      * 参数列表
      */
-    private List<ArgumentMetadata> arguments;
+    private List<ArgumentVO> arguments;
 
-    public EndpointMetadata(String version, String application, EndpointProtocol protocol,
-                            String rpcGroup, String rpcVersion, int rpcRetries, String rpcTimeout,
-                            boolean authorize,
-                            String upstreamHost, String upstreamUri, String upstreamMethod,
-                            String httpPattern, String httpMethod,
-                            List<ArgumentMetadata> arguments) {
+    public EndpointVO(String version, String application, ProtoType protocol,
+                      String rpcGroup, String rpcVersion, int rpcRetries, String rpcTimeout,
+                      boolean authorize,
+                      String upstreamHost, String upstreamUri, String upstreamMethod,
+                      String httpPattern, String httpMethod,
+                      List<ArgumentVO> arguments) {
         this.version = version;
         this.application = application;
         this.protocol = protocol;
@@ -110,7 +110,7 @@ public class EndpointMetadata implements Serializable {
         return application;
     }
 
-    public EndpointProtocol getProtocol() {
+    public ProtoType getProtocol() {
         return protocol;
     }
 
@@ -154,7 +154,7 @@ public class EndpointMetadata implements Serializable {
         return httpMethod;
     }
 
-    public List<ArgumentMetadata> getArguments() {
+    public List<ArgumentVO> getArguments() {
         return arguments;
     }
 
@@ -167,7 +167,7 @@ public class EndpointMetadata implements Serializable {
     public static final class Builder {
         private String version = "v1";
         private String application;
-        private EndpointProtocol protocol;
+        private ProtoType protocol;
         private String rpcGroup;
         private String rpcVersion;
         private int rpcRetries;
@@ -178,7 +178,7 @@ public class EndpointMetadata implements Serializable {
         private String upstreamMethod;
         private String httpPattern;
         private String httpMethod;
-        private List<ArgumentMetadata> arguments;
+        private List<ArgumentVO> arguments;
 
         private Builder() {
         }
@@ -193,7 +193,7 @@ public class EndpointMetadata implements Serializable {
             return this;
         }
 
-        public Builder protocol(EndpointProtocol protocol) {
+        public Builder protocol(ProtoType protocol) {
             this.protocol = protocol;
             return this;
         }
@@ -248,13 +248,13 @@ public class EndpointMetadata implements Serializable {
             return this;
         }
 
-        public Builder arguments(List<ArgumentMetadata> arguments) {
+        public Builder arguments(List<ArgumentVO> arguments) {
             this.arguments = arguments;
             return this;
         }
 
-        public EndpointMetadata build() {
-            return new EndpointMetadata(version, application, protocol, rpcGroup, rpcVersion, rpcRetries, rpcTimeout, authorize, upstreamHost, upstreamUri, upstreamMethod, httpPattern, httpMethod, arguments);
+        public EndpointVO build() {
+            return new EndpointVO(version, application, protocol, rpcGroup, rpcVersion, rpcRetries, rpcTimeout, authorize, upstreamHost, upstreamUri, upstreamMethod, httpPattern, httpMethod, arguments);
         }
     }
 }

@@ -1,5 +1,7 @@
-package net.bytepowered.flux.core;
+package net.bytepowered.flux.endpoint;
 
+
+import net.bytepowered.flux.endpoint.entity.ArgumentVO;
 
 import java.lang.reflect.Type;
 
@@ -15,7 +17,7 @@ public interface ParameterResolver {
      *
      * @param parameter   参数对象
      * @param genericType 参数的泛型类型
-     * @return ArgumentMetadata，或者为Null
+     * @return ArgumentVO，或者为Null
      */
-    ArgumentMetadata resolve(java.lang.reflect.Parameter parameter, Type genericType);
+    ArgumentVO resolve(java.lang.reflect.Parameter parameter, Type genericType);
 }

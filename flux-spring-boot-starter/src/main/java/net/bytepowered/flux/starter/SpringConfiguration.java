@@ -1,12 +1,12 @@
 package net.bytepowered.flux.starter;
 
-import net.bytepowered.flux.core.EndpointRegistry;
-import net.bytepowered.flux.core.MetadataDecoder;
-import net.bytepowered.flux.core.MetadataResolver;
-import net.bytepowered.flux.impl.JsonDecoder;
-import net.bytepowered.flux.impl.registry.ZookeeperEndpointRegistry;
-import net.bytepowered.flux.impl.registry.ZookeeperRegistryConfig;
-import net.bytepowered.flux.impl.resolver.MethodMetadataResolver;
+import net.bytepowered.flux.endpoint.MetadataDecoder;
+import net.bytepowered.flux.endpoint.MetadataResolver;
+import net.bytepowered.flux.endpoint.Registry;
+import net.bytepowered.flux.endpoint.impl.JsonDecoder;
+import net.bytepowered.flux.endpoint.impl.registry.ZookeeperConfig;
+import net.bytepowered.flux.endpoint.impl.registry.ZookeeperRegistry;
+import net.bytepowered.flux.endpoint.impl.resolver.MethodMetadataResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,8 +17,8 @@ import org.springframework.context.annotation.Configuration;
 public class SpringConfiguration {
 
     @Bean
-    SpringBootstrap bootstrap() {
-        return new SpringBootstrap(clientConfig(), registry(), resolver());
+    SpringScannerBootstrap bootstrap() {
+        return new SpringScannerBootstrap(clientConfig(), registry(), resolver());
     }
 
     @Bean
@@ -32,14 +32,14 @@ public class SpringConfiguration {
     }
 
     @Bean
-    EndpointRegistry registry() {
-        return new ZookeeperEndpointRegistry(zookeeperConfig(), decoder());
+    Registry registry() {
+        return new ZookeeperRegistry(zookeeperConfig(), decoder());
     }
 
     @Bean
-    ZookeeperRegistryConfig zookeeperConfig() {
+    ZookeeperConfig zookeeperConfig() {
         SpringRegistryConfig c = registryConfig();
-        return new ZookeeperRegistryConfig(
+        return new ZookeeperConfig(
                 c.getRootPath(),
                 c.getSessionTimeoutMs(),
                 c.getConnectionTimeoutMs(),

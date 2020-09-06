@@ -1,8 +1,8 @@
-package net.bytepowered.flux.impl.resolver;
+package net.bytepowered.flux.endpoint.impl.resolver;
 
-import net.bytepowered.flux.core.ArgumentMetadata;
-import net.bytepowered.flux.core.ParameterResolver;
-import net.bytepowered.flux.core.ArgumentType;
+import net.bytepowered.flux.endpoint.entity.ArgumentVO;
+import net.bytepowered.flux.endpoint.ParameterResolver;
+import net.bytepowered.flux.endpoint.entity.ArgumentType;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
@@ -22,14 +22,14 @@ public class ObjectParameterResolver implements ParameterResolver {
     }
 
     @Override
-    public ArgumentMetadata resolve(java.lang.reflect.Parameter parameter, Type genericType) {
+    public ArgumentVO resolve(java.lang.reflect.Parameter parameter, Type genericType) {
         final Class<?> parameterType = parameter.getType();
         if (!isPojoType(parameterType)) {
             return null;
         }
         // POJO类型：不处理泛型
         final String className = parameter.getType().getTypeName();
-        return ArgumentMetadata.builder()
+        return ArgumentVO.builder()
                 .typeClass(className)
                 .typeGeneric(Collections.emptyList())
                 .argName(parameter.getName())
@@ -41,7 +41,7 @@ public class ObjectParameterResolver implements ParameterResolver {
     }
 
 
-    private ArgumentMetadata makeValueFieldFromPojoField(Field field) {
+    private ArgumentVO makeValueFieldFromPojoField(Field field) {
         final Class<?> fieldType = field.getType();
         if (!endpoint.isSupportedType(fieldType)) {
             throw new IllegalArgumentException("POJO的成员属性字段，必须是有效的数值端点属性");

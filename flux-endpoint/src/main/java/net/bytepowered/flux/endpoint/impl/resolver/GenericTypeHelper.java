@@ -1,4 +1,4 @@
-package net.bytepowered.flux.impl.resolver;
+package net.bytepowered.flux.endpoint.impl.resolver;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;

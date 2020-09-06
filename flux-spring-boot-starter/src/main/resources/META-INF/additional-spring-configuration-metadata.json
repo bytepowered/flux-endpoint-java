@@ -9,6 +9,11 @@
       "name": "flux.prefix",
       "type": "java.lang.String",
       "description": "统一应用API前缀."
+    },
+    {
+      "name": "flux.path-prefix",
+      "type": "java.lang.String",
+      "description": "统一应用API前缀."
     }
   ]
 }

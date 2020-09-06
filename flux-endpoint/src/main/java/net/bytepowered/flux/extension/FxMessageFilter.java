@@ -1,6 +1,5 @@
-package net.bytepowered.flux.filter;
+package net.bytepowered.flux.extension;
 
-import net.bytepowered.flux.extension.FxResponse;
 import org.apache.dubbo.rpc.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

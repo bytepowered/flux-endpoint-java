@@ -1,4 +1,4 @@
-package net.bytepowered.flux.core;
+package net.bytepowered.flux.endpoint.entity;
 
 /**
  * 参数类型

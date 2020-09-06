@@ -1,8 +1,8 @@
-package net.bytepowered.flux.impl.resolver;
+package net.bytepowered.flux.endpoint.impl.resolver;
 
 import net.bytepowered.flux.annotation.*;
-import net.bytepowered.flux.core.ArgumentMetadata;
-import net.bytepowered.flux.core.ArgumentType;
+import net.bytepowered.flux.endpoint.entity.ArgumentVO;
+import net.bytepowered.flux.endpoint.entity.ArgumentType;
 
 import java.lang.reflect.AnnotatedElement;
 import java.util.*;
@@ -29,9 +29,9 @@ public class JavaTypeHelper {
         supportedTypes.put(Map.class, Map.class);
     }
 
-    public ArgumentMetadata create(AnnotatedElement element,
-                                   String className, List<String> genericTypes,
-                                   String fieldName, String defaultHttpName) {
+    public ArgumentVO create(AnnotatedElement element,
+                             String className, List<String> genericTypes,
+                             String fieldName, String defaultHttpName) {
         final FxScope scope;
         final String httpName;
         if (element.isAnnotationPresent(FxAttr.class)) {
@@ -65,7 +65,7 @@ public class JavaTypeHelper {
             scope = FxScope.AUTO;
             httpName = defaultHttpName;
         }
-        return ArgumentMetadata.builder()
+        return ArgumentVO.builder()
                 .element(element)
                 .typeClass(className)
                 .typeGeneric(genericTypes)

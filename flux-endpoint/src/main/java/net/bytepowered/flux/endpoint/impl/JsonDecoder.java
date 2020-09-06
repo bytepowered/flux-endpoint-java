@@ -1,8 +1,8 @@
-package net.bytepowered.flux.impl;
+package net.bytepowered.flux.endpoint.impl;
 
 import com.google.gson.*;
-import net.bytepowered.flux.core.MetadataDecoder;
-import net.bytepowered.flux.core.EndpointMetadata;
+import net.bytepowered.flux.endpoint.MetadataDecoder;
+import net.bytepowered.flux.endpoint.entity.EndpointVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +25,7 @@ public class JsonDecoder implements MetadataDecoder {
             .create();
 
     @Override
-    public String decode(EndpointMetadata metadata) {
+    public String decode(EndpointVO metadata) {
         return gson.toJson(metadata);
     }
 
