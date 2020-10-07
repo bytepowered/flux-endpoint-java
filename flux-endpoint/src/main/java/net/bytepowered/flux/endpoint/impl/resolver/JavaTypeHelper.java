@@ -1,8 +1,8 @@
 package net.bytepowered.flux.endpoint.impl.resolver;
 
 import net.bytepowered.flux.annotation.*;
-import net.bytepowered.flux.endpoint.entity.ArgumentVO;
 import net.bytepowered.flux.endpoint.entity.ArgumentType;
+import net.bytepowered.flux.endpoint.entity.ArgumentVO;
 
 import java.lang.reflect.AnnotatedElement;
 import java.util.*;
@@ -32,37 +32,37 @@ public class JavaTypeHelper {
     public ArgumentVO create(AnnotatedElement element,
                              String className, List<String> genericTypes,
                              String fieldName, String defaultHttpName) {
-        final FxScope scope;
+        final Scope scope;
         final String httpName;
-        if (element.isAnnotationPresent(FxAttr.class)) {
-            final FxAttr attr = element.getAnnotation(FxAttr.class);
-            scope = FxScope.ATTR;
+        if (element.isAnnotationPresent(Attr.class)) {
+            final Attr attr = element.getAnnotation(Attr.class);
+            scope = Scope.ATTR;
             httpName = aliasFor(attr.name(), attr.value());
-        } else if (element.isAnnotationPresent(FxAttrs.class)) {
-            scope = FxScope.ATTRS;
+        } else if (element.isAnnotationPresent(Attrs.class)) {
+            scope = Scope.ATTRS;
             httpName = "$attrs";
-        } else if (element.isAnnotationPresent(FxForm.class)) {
-            final FxForm param = element.getAnnotation(FxForm.class);
-            scope = FxScope.FORM;
+        } else if (element.isAnnotationPresent(Form.class)) {
+            final Form param = element.getAnnotation(Form.class);
+            scope = Scope.FORM;
             httpName = aliasFor(param.name(), param.value());
-        } else if (element.isAnnotationPresent(FxHeader.class)) {
-            final FxHeader header = element.getAnnotation(FxHeader.class);
-            scope = FxScope.HEADER;
+        } else if (element.isAnnotationPresent(Header.class)) {
+            final Header header = element.getAnnotation(Header.class);
+            scope = Scope.HEADER;
             httpName = aliasFor(header.name(), header.value());
-        } else if (element.isAnnotationPresent(FxParam.class)) {
-            final FxParam attr = element.getAnnotation(FxParam.class);
-            scope = FxScope.PARAM;
+        } else if (element.isAnnotationPresent(Param.class)) {
+            final Param attr = element.getAnnotation(Param.class);
+            scope = Scope.PARAM;
             httpName = aliasFor(attr.name(), attr.value());
-        } else if (element.isAnnotationPresent(FxPath.class)) {
-            final FxPath path = element.getAnnotation(FxPath.class);
-            scope = FxScope.PATH;
+        } else if (element.isAnnotationPresent(Path.class)) {
+            final Path path = element.getAnnotation(Path.class);
+            scope = Scope.PATH;
             httpName = aliasFor(path.name(), path.value());
-        } else if (element.isAnnotationPresent(FxQuery.class)) {
-            final FxQuery query = element.getAnnotation(FxQuery.class);
-            scope = FxScope.QUERY;
+        } else if (element.isAnnotationPresent(Query.class)) {
+            final Query query = element.getAnnotation(Query.class);
+            scope = Scope.QUERY;
             httpName = aliasFor(query.name(), query.value());
         } else {
-            scope = FxScope.AUTO;
+            scope = Scope.AUTO;
             httpName = defaultHttpName;
         }
         return ArgumentVO.builder()

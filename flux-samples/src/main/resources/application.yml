@@ -7,7 +7,7 @@ dubbo:
   application:
     name: "${spring.application.name}"
   registry:
-    address: zookeeper://localhost:2181
+    address: zookeeper://tx.devserver.net:2181
   scan:
     base-packages: "net.bytepowered.flux.samples"
   protocol:
@@ -21,7 +21,7 @@ flux:
     root-path: "/flux-metadata"
     session-timeout-ms: 30000
     connection-timeout-ms: 60000
-    address: ${FLUX_REGISTRY_ADDRESSS:zookeeper://localhost:2181}
+    address: ${FLUX_REGISTRY_ADDRESSS:zookeeper://tx.devserver.net:2181}
 
 
 # 日志配置

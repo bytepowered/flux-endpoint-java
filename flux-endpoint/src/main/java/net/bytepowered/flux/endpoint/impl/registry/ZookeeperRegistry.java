@@ -1,6 +1,6 @@
 package net.bytepowered.flux.endpoint.impl.registry;
 
-import net.bytepowered.flux.endpoint.MetadataDecoder;
+import net.bytepowered.flux.endpoint.EndpointDecoder;
 import net.bytepowered.flux.endpoint.Registry;
 import net.bytepowered.flux.endpoint.entity.EndpointVO;
 import org.apache.curator.framework.CuratorFramework;
@@ -26,10 +26,10 @@ public class ZookeeperRegistry implements Registry {
     private static final Logger LOGGER = LoggerFactory.getLogger(ZookeeperRegistry.class);
 
     private final String rootPath;
-    private final MetadataDecoder decoder;
+    private final EndpointDecoder decoder;
     private final CuratorFramework zkClient;
 
-    public ZookeeperRegistry(ZookeeperConfig config, MetadataDecoder decoder) {
+    public ZookeeperRegistry(ZookeeperConfig config, EndpointDecoder decoder) {
         this.decoder = decoder;
         this.rootPath = config.getRootPath();
         this.zkClient = CuratorFrameworkFactory.builder()

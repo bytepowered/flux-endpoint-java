@@ -15,22 +15,22 @@ import java.util.Map;
  */
 public interface DemoService {
 
-    @FxMapping(path = "/test/hello", method = FxMethod.GET, authorized = false)
+    @Mapping(path = "/test/hello", method = HttpMethod.GET, authorized = false)
     FxResponse hello(
             @Min(10)
-            @FxQuery(value = "group") Integer group,
+            @Query(value = "group") Integer group,
             @NotEmpty
-            @FxQuery List<Integer> state
+            @Query(value = "state") List<Integer> state
     );
 
-    @FxMapping(path = "/test/pojo2", method = FxMethod.GET, authorized = false)
+    @Mapping(path = "/test/pojo2", method = HttpMethod.GET, authorized = false)
     Object pojo(
-            @FxParam(value = "group") Integer group,
+            @Param(value = "group") Integer group,
             @NotNull UserDO user
     );
 
-    @FxMapping(path = "/test/{userId}", method = FxMethod.GET)
+    @Mapping(path = "/test/{userId}", method = HttpMethod.GET)
     Map<String, Object> helloDynamic(
-            @FxPath(value = "userId") String userId,
-            @FxParam String queryId);
+            @Path(value = "userId") String userId,
+            @Param String queryId);
 }

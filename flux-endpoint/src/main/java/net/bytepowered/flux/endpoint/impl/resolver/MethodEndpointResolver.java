@@ -1,7 +1,8 @@
 package net.bytepowered.flux.endpoint.impl.resolver;
 
-import net.bytepowered.flux.annotation.FxMapping;
-import net.bytepowered.flux.endpoint.*;
+import net.bytepowered.flux.annotation.Mapping;
+import net.bytepowered.flux.endpoint.EndpointResolver;
+import net.bytepowered.flux.endpoint.ParameterResolver;
 import net.bytepowered.flux.endpoint.entity.ArgumentVO;
 import net.bytepowered.flux.endpoint.entity.EndpointVO;
 import net.bytepowered.flux.endpoint.entity.ProtoType;
@@ -20,13 +21,13 @@ import java.util.stream.Collectors;
  * @author 陈哈哈 (yongjia.chen@hotmail.com)
  * @since 1.0.0
  */
-public class MethodMetadataResolver implements MetadataResolver {
+public class MethodEndpointResolver implements EndpointResolver {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodMetadataResolver.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodEndpointResolver.class);
 
     private final List<ParameterResolver> parameterResolvers = new ArrayList<>();
 
-    public MethodMetadataResolver() {
+    public MethodEndpointResolver() {
         final JavaTypeHelper helper = new JavaTypeHelper();
         parameterResolvers.add(new JavaFieldParameterResolver(helper));
         parameterResolvers.add(new ObjectParameterResolver(helper));
@@ -43,14 +44,14 @@ public class MethodMetadataResolver implements MetadataResolver {
                         metadata.getGroup(),
                         metadata.getVersion(),
                         metadata.getInterfaceName(),
-                        method.getDeclaredAnnotation(FxMapping.class),
+                        method.getDeclaredAnnotation(Mapping.class),
                         method))
                 .collect(Collectors.toList());
     }
 
     public EndpointVO resolveToMetadata(String prefix, String appName,
                                         String serviceGroup, String serviceVer, String interfaceName,
-                                        FxMapping mapping, Method method) {
+                                        Mapping mapping, Method method) {
         final EndpointVO.Builder builder = EndpointVO.builder()
                 .application(appName == null ? "" : appName)
                 .rpcGroup(serviceGroup == null ? "" : serviceGroup)

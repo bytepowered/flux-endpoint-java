@@ -3,7 +3,7 @@ package net.bytepowered.flux.annotation;
 import java.lang.annotation.*;
 
 /**
- * 表示从Http的动态路径Path参数中读取参数值。
+ * 表示从Http的Form参数中读取参数值。
  *
  * @author 陈哈哈 (yongjia.chen@hotmail.com)
  */
@@ -11,10 +11,10 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.PARAMETER, ElementType.FIELD})
 @Inherited
-public @interface FxPath {
+public @interface Query {
 
     /**
-     * @see FxPath#name()
+     * @see Query#name()
      */
     String value() default "";
 

@@ -11,10 +11,10 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.PARAMETER, ElementType.FIELD})
 @Inherited
-public @interface FxHeader {
+public @interface Header {
 
     /**
-     * @see FxHeader#name()
+     * @see Header#name()
      */
     String value() default "";
 

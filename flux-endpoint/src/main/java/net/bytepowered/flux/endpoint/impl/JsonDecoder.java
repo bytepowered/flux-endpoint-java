@@ -1,7 +1,7 @@
 package net.bytepowered.flux.endpoint.impl;
 
 import com.google.gson.*;
-import net.bytepowered.flux.endpoint.MetadataDecoder;
+import net.bytepowered.flux.endpoint.EndpointDecoder;
 import net.bytepowered.flux.endpoint.entity.EndpointVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +14,7 @@ import java.lang.reflect.Type;
  * @author 陈哈哈 (yongjia.chen@hotmail.com)
  * @since 1.0.0
  */
-public class JsonDecoder implements MetadataDecoder {
+public class JsonDecoder implements EndpointDecoder {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JsonDecoder.class);
 

@@ -9,7 +9,7 @@ import java.util.List;
  * @author 陈哈哈 (yongjia.chen@hotmail.com)
  * @since 1.0.0
  */
-public interface MetadataResolver {
+public interface EndpointResolver {
 
     List<EndpointVO> resolve(ServiceBeanVO beanMetadata);
 }

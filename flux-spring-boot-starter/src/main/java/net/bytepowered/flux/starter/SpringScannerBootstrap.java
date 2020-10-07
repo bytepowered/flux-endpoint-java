@@ -1,8 +1,8 @@
 package net.bytepowered.flux.starter;
 
-import net.bytepowered.flux.annotation.FxMapping;
+import net.bytepowered.flux.annotation.Mapping;
+import net.bytepowered.flux.endpoint.EndpointResolver;
 import net.bytepowered.flux.endpoint.Registry;
-import net.bytepowered.flux.endpoint.MetadataResolver;
 import net.bytepowered.flux.endpoint.entity.ServiceBeanVO;
 import org.apache.dubbo.config.spring.ServiceBean;
 import org.slf4j.Logger;
@@ -30,9 +30,9 @@ public class SpringScannerBootstrap implements ApplicationListener<ApplicationRe
 
     private final SpringClientConfig config;
     private final Registry registry;
-    private final MetadataResolver resolver;
+    private final EndpointResolver resolver;
 
-    public SpringScannerBootstrap(SpringClientConfig config, Registry registry, MetadataResolver resolver) {
+    public SpringScannerBootstrap(SpringClientConfig config, Registry registry, EndpointResolver resolver) {
         this.config = config;
         this.registry = registry;
         this.resolver = resolver;
@@ -97,7 +97,7 @@ public class SpringScannerBootstrap implements ApplicationListener<ApplicationRe
                         .interfaceName(bean.getInterface())
                         .interfaceClass(bean.getInterfaceClass())
                         .methods(Arrays.stream(bean.getInterfaceClass().getDeclaredMethods())
-                                .filter(m -> m.isAnnotationPresent(FxMapping.class))
+                                .filter(m -> m.isAnnotationPresent(Mapping.class))
                                 .collect(Collectors.toList()))
                         .build()
                 ).collect(Collectors.toList());

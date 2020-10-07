@@ -1,8 +1,8 @@
 package net.bytepowered.flux.endpoint.impl.resolver;
 
-import net.bytepowered.flux.endpoint.entity.ArgumentVO;
 import net.bytepowered.flux.endpoint.ParameterResolver;
 import net.bytepowered.flux.endpoint.entity.ArgumentType;
+import net.bytepowered.flux.endpoint.entity.ArgumentVO;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
@@ -15,10 +15,10 @@ import java.util.stream.Stream;
  */
 public class ObjectParameterResolver implements ParameterResolver {
 
-    private final JavaTypeHelper endpoint;
+    private final JavaTypeHelper typeHelper;
 
-    public ObjectParameterResolver(JavaTypeHelper endpoint) {
-        this.endpoint = endpoint;
+    public ObjectParameterResolver(JavaTypeHelper typeHelper) {
+        this.typeHelper = typeHelper;
     }
 
     @Override
@@ -43,11 +43,11 @@ public class ObjectParameterResolver implements ParameterResolver {
 
     private ArgumentVO makeValueFieldFromPojoField(Field field) {
         final Class<?> fieldType = field.getType();
-        if (!endpoint.isSupportedType(fieldType)) {
+        if (!typeHelper.isSupportedType(fieldType)) {
             throw new IllegalArgumentException("POJO的成员属性字段，必须是有效的数值端点属性");
         }
         final GenericTypeHelper generic = GenericTypeHelper.from(field);
-        return endpoint.create(
+        return typeHelper.create(
                 field,
                 generic.className,
                 generic.genericTypes,

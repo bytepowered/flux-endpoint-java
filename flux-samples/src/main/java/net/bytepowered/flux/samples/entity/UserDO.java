@@ -1,7 +1,7 @@
 package net.bytepowered.flux.samples.entity;
 
 import lombok.Data;
-import net.bytepowered.flux.annotation.FxForm;
+import net.bytepowered.flux.annotation.Form;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Data
 public class UserDO implements Serializable {
 
-    @FxForm
+    @Form
     @NotEmpty
     private String username;
 

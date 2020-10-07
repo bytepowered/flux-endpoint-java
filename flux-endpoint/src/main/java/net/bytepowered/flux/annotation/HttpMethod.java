@@ -5,7 +5,7 @@ package net.bytepowered.flux.annotation;
  *
  * @author 陈哈哈 (yongjia.chen@hotmail.com)
  */
-public enum FxMethod {
+public enum HttpMethod {
     /**
      * Http GET
      */

@@ -5,7 +5,7 @@ package net.bytepowered.flux.annotation;
  *
  * @author 陈哈哈 yongjia.chen@hotmail.com
  */
-public enum FxScope {
+public enum Scope {
 
     /**
      * 自动搜索Http参数

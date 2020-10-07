@@ -1,6 +1,6 @@
 package net.bytepowered.flux.endpoint.entity;
 
-import net.bytepowered.flux.annotation.FxScope;
+import net.bytepowered.flux.annotation.Scope;
 
 import java.io.Serializable;
 import java.lang.reflect.AnnotatedElement;
@@ -41,7 +41,7 @@ public class ArgumentVO implements Serializable {
     /**
      * 指定从网关Http请求的数据源，Value值将从指定的数据源中读取。
      */
-    private FxScope httpScope;
+    private Scope httpScope;
 
     /**
      * 当type类型为POJO时，fields记录所有POJO成员字段的列表及其类型
@@ -74,7 +74,7 @@ public class ArgumentVO implements Serializable {
         return httpName;
     }
 
-    public FxScope getHttpScope() {
+    public Scope getHttpScope() {
         return httpScope;
     }
 
@@ -82,7 +82,7 @@ public class ArgumentVO implements Serializable {
         return fields;
     }
 
-    public ArgumentVO(AnnotatedElement element, String typeClass, List<String> typeGeneric, String argName, ArgumentType argType, String httpName, FxScope httpScope, List<ArgumentVO> fields) {
+    public ArgumentVO(AnnotatedElement element, String typeClass, List<String> typeGeneric, String argName, ArgumentType argType, String httpName, Scope httpScope, List<ArgumentVO> fields) {
         this.element = element;
         this.typeClass = typeClass;
         this.typeGeneric = typeGeneric;
@@ -104,7 +104,7 @@ public class ArgumentVO implements Serializable {
         private String argName;
         private ArgumentType argType;
         private String httpName;
-        private FxScope httpScope;
+        private Scope httpScope;
         private List<ArgumentVO> fields;
 
         private Builder() {
@@ -140,7 +140,7 @@ public class ArgumentVO implements Serializable {
             return this;
         }
 
-        public Builder httpScope(FxScope httpScope) {
+        public Builder httpScope(Scope httpScope) {
             this.httpScope = httpScope;
             return this;
         }

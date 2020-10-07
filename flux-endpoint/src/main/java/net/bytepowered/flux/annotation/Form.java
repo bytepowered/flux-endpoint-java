@@ -11,10 +11,10 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.PARAMETER, ElementType.FIELD})
 @Inherited
-public @interface FxForm {
+public @interface Form {
 
     /**
-     * @see FxForm#name()
+     * @see Form#name()
      */
     String value() default "";
 

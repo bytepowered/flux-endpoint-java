@@ -1,12 +1,12 @@
 package net.bytepowered.flux.starter;
 
-import net.bytepowered.flux.endpoint.MetadataDecoder;
-import net.bytepowered.flux.endpoint.MetadataResolver;
+import net.bytepowered.flux.endpoint.EndpointDecoder;
+import net.bytepowered.flux.endpoint.EndpointResolver;
 import net.bytepowered.flux.endpoint.Registry;
 import net.bytepowered.flux.endpoint.impl.JsonDecoder;
 import net.bytepowered.flux.endpoint.impl.registry.ZookeeperConfig;
 import net.bytepowered.flux.endpoint.impl.registry.ZookeeperRegistry;
-import net.bytepowered.flux.endpoint.impl.resolver.MethodMetadataResolver;
+import net.bytepowered.flux.endpoint.impl.resolver.MethodEndpointResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -22,13 +22,13 @@ public class SpringConfiguration {
     }
 
     @Bean
-    MetadataDecoder decoder() {
+    EndpointDecoder decoder() {
         return new JsonDecoder();
     }
 
     @Bean
-    MetadataResolver resolver() {
-        return new MethodMetadataResolver();
+    EndpointResolver resolver() {
+        return new MethodEndpointResolver();
     }
 
     @Bean

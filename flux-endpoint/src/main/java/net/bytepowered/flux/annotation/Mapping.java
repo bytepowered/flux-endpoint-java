@@ -11,14 +11,14 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD})
 @Inherited
-public @interface FxMapping {
+public @interface Mapping {
 
     /**
      * Http方法
      *
      * @return HttpMethod
      */
-    FxMethod method();
+    HttpMethod method();
 
     /**
      * 映射到网关的请求Uri路径
